@@ -4,6 +4,7 @@
 #define _EC_DELL_MEC5035_H_
 
 #include <stdint.h>
+#include <types.h>
 
 #define NUM_REGISTERS	32
 
@@ -12,6 +13,8 @@ enum mec5035_cmd {
 	CMD_RADIO_CTRL = 0x2b,
 	CMD_POWER_BUTTON_TO_HOST = 0x3e,
 	CMD_MUTE_CTRL = 0x60,
+	CMD_ACPI_WAKEUP_CHANGE = 0x4a,
+	CMD_SLEEP_ENABLE = 0x64,
 	CMD_CPU_OK = 0xc2,
 };
 
@@ -35,6 +38,7 @@ enum ec_radio_state {
 	RADIO_ON
 };
 
+<<<<<<< HEAD
 enum ec_power_button_route {
 	EC = 0,
 	HOST
@@ -46,9 +50,30 @@ enum ec_mute {
 	UNMUTE,
 };
 
+=======
+#define ACPI_WAKEUP_NUM_ARGS 4
+enum ec_wake_change {
+	WAKE_OFF = 0,
+	WAKE_ON
+};
+
+/* Copied from ec/google/wilco/commands.h. Not sure if these all apply */
+enum ec_acpi_wake_events {
+	EC_ACPI_WAKE_PWRB = BIT(0),     /* Wake up by power button */
+	EC_ACPI_WAKE_LID = BIT(1),      /* Wake up by lid switch */
+	EC_ACPI_WAKE_RTC = BIT(5),      /* Wake up by RTC */
+};
+
+#define SLEEP_EN_NUM_ARGS 2
+
+>>>>>>> 8e176fd3b7 (ec/dell/mec5035: Add S3 suspend SMI handler)
 u8 mec5035_mouse_touchpad(enum ec_mouse_setting setting);
 void mec5035_cpu_ok(void);
 void mec5035_early_init(void);
 void mec5035_control_radio(enum ec_radio_dev device, enum ec_radio_state state);
+void mec5035_change_wake(u8 source, enum ec_wake_change change);
+void mec5035_sleep_enable(void);
+
+void mec5035_smi_sleep(int slp_type);
 
 #endif /* _EC_DELL_MEC5035_H_ */

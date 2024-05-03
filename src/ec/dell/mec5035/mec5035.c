@@ -94,6 +94,7 @@ void mec5035_control_radio(enum ec_radio_dev dev, enum ec_radio_state state)
 	ec_command(CMD_RADIO_CTRL);
 }
 
+
 static void mec5035_power_button_route(enum ec_power_button_route target)
 {
 	u8 buf = (u8)target;
@@ -106,6 +107,20 @@ static void mec5035_mute_ctrl(enum ec_mute mute)
 	u8 buf[MUTE_CTRL_NUM_ARGS] = {mute};
 	write_mailbox_regs(buf, 2, MUTE_CTRL_NUM_ARGS);
 	ec_command(CMD_MUTE_CTRL);
+
+void mec5035_change_wake(u8 source, enum ec_wake_change change)
+{
+	u8 buf[ACPI_WAKEUP_NUM_ARGS] = {change, source, 0, 0x40};
+	write_mailbox_regs(buf, 2, ACPI_WAKEUP_NUM_ARGS);
+	ec_command(CMD_ACPI_WAKEUP_CHANGE);
+}
+
+void mec5035_sleep_enable(void)
+{
+	u8 buf[SLEEP_EN_NUM_ARGS] = {3, 0};
+	write_mailbox_regs(buf, 2, SLEEP_EN_NUM_ARGS);
+	ec_command(CMD_SLEEP_ENABLE);
+
 }
 
 void mec5035_early_init(void)
