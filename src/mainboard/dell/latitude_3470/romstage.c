@@ -50,7 +50,7 @@ void mainboard_memory_init_params(FSPM_UPD *mupd)
 	  M_A_DQ2 to DQ4,
 	  etc. */
 	
-	mem_cfg->DqPinsInterleaved = FALSE; //Gemini said that memory cell 2 to data line 4 is called Data Lane Swizzling, which is a typical way to keep boards simple, but is different from Interleaving, which is you use lines from different RAM chips as if they were one chip.
+	mem_cfg->DqPinsInterleaved = TRUE; //Gemini said that memory cell 2 to data line 4 is called Data Lane Swizzling, which is a typical way to keep boards simple, but is different from Interleaving, which is you use lines from different RAM chips as if they were one chip.
 	mem_cfg->CaVrefConfig = 0; //Gemini said this setting is much more common on laptops and is a safer bet. I got 2 as the correct value from the schematic and that was the former selection here.
 	mem_cfg->MemorySpdDataLen = blk.len;
 	mem_cfg->MemorySpdPtr00 = (uintptr_t)blk.spd_array[0];
