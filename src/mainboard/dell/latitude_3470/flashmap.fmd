@@ -1,0 +1,14 @@
+FLASH 16M {
+	SI_DESC 4K
+	SI_ME 7164K
+	SI_BIOS 9216K {
+		ECFW@0x0 256K
+		FMAP@256K 4K
+		CONSOLE@260K 128K
+		RW_MRC_CACHE@388K 64K
+		COREBOOT(CBFS)@452K 8764K #originally 9216K before -256 for EC firmware and -128 for console logs and -64 for RW_MRC_CACHE.
+		
+	}
+}
+
+#fixed so that the reset vector isn't left out at the end of the image.

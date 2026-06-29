@@ -1,0 +1,6 @@
+## SPDX-License-Identifier: GPL-2.0-only
+
+config BOARD_DELL_LATITUDE_3470
+	bool "Latitude 3470/3450"
+	help
+	  The 3470 and 3450 mainboards are identical.

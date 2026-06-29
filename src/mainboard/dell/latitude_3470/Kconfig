@@ -1,0 +1,37 @@
+if BOARD_DELL_LATITUDE_3470
+
+config BOARD_SPECIFIC_OPTIONS
+	def_bool y
+	select SOC_INTEL_SKYLAKE          # Tells coreboot it's a 6th-gen Intel CPU
+	select BOARD_ROMSIZE_KB_16384     # Sets the ROM image size to exactly 16MB
+	select HAVE_ACPI_TABLES           # Necessary for OS power management (Linux/Windows)
+	select HAVE_ACPI_RESUME           # Enables sleep/wake functionality
+	#select NO_UART_ON_BOARD           # Tells coreboot there is no physical serial debugging port
+	select OVERRIDE_FLASHMAP          # Crucial! Forces coreboot to use your custom .fmd layout
+	select MAINBOARD_HAS_LIBGFXINIT
+	select SOC_INTEL_COMMON_BLOCK_HDA_VERB
+	select DRIVERS_I2C_GENERIC
+
+config MAINBOARD_DIR
+	string
+	default "dell/latitude_3470"
+
+config MAINBOARD_PART_NUMBER
+	string
+	default "Latitude 3470"
+
+config FMDFILE
+	string
+	default "src/mainboard/dell/latitude_3470/flashmap.fmd"
+
+#config EC_FIRMWARE_FILE
+#	string "Path and filename of the EC firmware"
+#	default "3470_ec.bin"
+#
+endif
+
+#apparently most Skylake systems use DDR4 which uses 512 bytes to house the SPD (description of the memory attributes (make, capacity, speed, voltage, etc.))
+#However, DDR3L, which this machine uses, uses 256 bytes to store the SPD.
+config DIMM_SPD_SIZE
+	int
+	default 256

@@ -1,0 +1,67 @@
+chip soc/intel/skylake
+
+     #Enable Panel as eDP and configure power delays
+     device ref igpu on
+          register "panel_cfg" = "{
+               .up_delay_ms		=  200,	// T3
+		.down_delay_ms		=  50,	// T10
+		.cycle_delay_ms		= 500,	// T12
+		.backlight_on_delay_ms	=  1,	// T7
+		.backlight_off_delay_ms	=  200,	// T9
+		.backlight_pwm_hz 	= 200 //From BDB block 43. Gemini pointed out that if I left this line blank, the screen would have no backlight until control is handed to the OS.
+	}"
+     end
+
+     device domain 0 on
+          #device ref igpu on end
+          device ref south_xhci on
+               register "usb2_ports" = "{ //changed them from another type which didn't exist on skylake usb 2
+               [0] = USB2_PORT_MID(OC0),	// Type-A 3.0 Port (left, towards monitor)
+               [1] = USB2_PORT_MID(OC1),	// Type-A 3.0 Port (left, towards touchpad)
+               [2] = USB2_PORT_MID(OC2),	// Type-A 2.0 Port (Right)
+               [4] = USB2_PORT_MID(OC_SKIP), //Webcam
+               [5] = USB2_PORT_MID(OC_SKIP), //SD Card Reader
+               [7] = USB2_PORT_MID(OC_SKIP), //Bluetooth
+               }"
+               
+               register "usb3_ports" = "{
+               [0] = USB3_PORT_DEFAULT(OC0),	// Type-A 3.0 Port (left, towards monitor)
+               [1] = USB3_PORT_DEFAULT(OC1),	// Type-A 3.0 Port (left, towards touchpad)
+               }"
+          end
+          
+          device ref thermal on end
+          device ref i2c0 on #mainboard/google/glados/variant/chell/ is a useful board to compare this with.
+               chip drivers/i2c/generic
+                    register "hid" = ""DLL06F2""
+                    register "desc" = ""Synaptics Touchpad""
+                    #I tried my best to verify through dsdt.dsl, but if this doesn't work try ACPI_IRQ_EDGE_LOW(GPP_B3) or substitute GPP_B3 for GPP_B3_INT.
+                    register "irq" = "ACPI_IRQ_LEVEL_LOW(GPP_B3)"
+                    register "irq_gpio" = "ACPI_GPIO_IRQ_LEVEL_LOW(GPP_B3)"
+                    device i2c 2c on end #the i2c address identifier expects a raw hex value without the 0x prefix -Gemini (0x2c -> 2c)
+               end
+          end
+
+          device ref heci1 on end
+          device ref sata on end #add sata ops?
+          
+          device ref pcie_rp1 on
+               #WAN Card. lspci lists WAN as Root Port #5. Coreboot's naming scheme is lying here. (5 - 1 = 4)
+               register "pcie_rp_aspm[4]" = "2" #2 maps to ASPM_L1 
+               register "PcieRpClkReqNumber[4]" = "1"  # Schematic ties the WLAN slot to physical clock request line 1. 
+               device pci 00.0 on end
+          end
+          
+          device ref pcie_rp6 on
+               #Realtek Gigabit Ethernet. lspci lists Ethernet as Root Port #6. Coreboot's naming scheme is lying here. (6 - 1 = 5)
+               register "pcie_rp_aspm[5]" = "2" #2 maps to ASPM_L1 
+               register "PcieRpClkReqNumber[5]" = "4" # Schematic ties the Ethernet chip to physical clock request line 4.
+               device pci 00.0 on end
+          end
+          
+          device ref lpc_espi on end
+          device ref pmc on end
+          device ref hda on end #hd audio looks like it could use config
+          device ref smbus on end
+     end
+end
