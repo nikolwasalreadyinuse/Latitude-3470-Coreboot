@@ -1,19 +1,18 @@
 chip soc/intel/skylake
 
      #Enable Panel as eDP and configure power delays
-     device ref igpu on
-          register "panel_cfg" = "{
-               .up_delay_ms		=  200,	// T3
-		.down_delay_ms		=  50,	// T10
-		.cycle_delay_ms		= 500,	// T12
-		.backlight_on_delay_ms	=  1,	// T7
-		.backlight_off_delay_ms	=  200,	// T9
-		.backlight_pwm_hz 	= 200 //From BDB block 43. Gemini pointed out that if I left this line blank, the screen would have no backlight until control is handed to the OS.
-	}"
-     end
+     register "panel_cfg" = "{
+     	      .up_delay_ms		=  200,	// T3
+	      .down_delay_ms		=  50,	// T10
+	      .cycle_delay_ms		= 500,	// T12
+	      .backlight_on_delay_ms	=  1,	// T7
+	      .backlight_off_delay_ms	=  200,	// T9
+	      .backlight_pwm_hz 	= 200 //From BDB block 43. Gemini pointed out that if I left this line blank, the screen would have no backlight until control is handed to the OS.
+	      }"
+
 
      device domain 0 on
-          #device ref igpu on end
+          device ref igpu on end
           device ref south_xhci on
                register "usb2_ports" = "{ //changed them from another type which didn't exist on skylake usb 2
                [0] = USB2_PORT_MID(OC0),	// Type-A 3.0 Port (left, towards monitor)
