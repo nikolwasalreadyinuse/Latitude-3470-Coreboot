@@ -42,7 +42,19 @@ chip soc/intel/skylake
           end
 
           device ref heci1 on end
-          device ref sata on end #add sata ops?
+          device ref sata on
+	  	 register "SataSalpSupport" = "1"
+
+			# The X210 has 3 SATA ports: a full SATA port, mSATA, and SATA over M.2
+			register "SataPortsEnable" = "{
+				[0] = 1,
+			}"
+			register "SataPortsDevSlp" = "{
+				[0] = 1, //apparently DevSlp is some power saving feature for SSDs.
+			
+			}"
+
+	  end
           
           device ref pcie_rp1 on
                #WAN Card. lspci lists WAN as Root Port #5. Coreboot's naming scheme is lying here. (5 - 1 = 4)
