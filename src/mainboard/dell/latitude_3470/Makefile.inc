@@ -7,6 +7,8 @@ ec_blob-type := raw
 # This flag commands cbfstool to bypass CBFS and flash it directly to the ECFW FMAP region
 ec_blob-flags := -r ECFW
 
+ramstage-y += hda_verb.c
+
 
 # Tell the build system to write the raw EC blob to the ECFW region right after the primary ROM layout is generated
 PHONY += update_ecfw_region
