@@ -13,4 +13,5 @@ DefinitionBlock(
 {
 	/* Intentionally left blank. 
 	   Coreboot handles devicetree devices natively via separate SSDT generation. */
+	   
 }

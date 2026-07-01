@@ -4,5 +4,9 @@ romstage-y += romstage.c #I could also go the direction of setting my memory con
 ramstage-y += hda_verb.c
 ramstage-$(CONFIG_MAINBOARD_USE_LIBGFXINIT) += gma-mainboard.ads
 
+#they had both in the ivybridge latitude folders
+bootblock-y += early_init.c
+romstage-y += early_init.c
+
 ramstage-y += ../../../drivers/i2c/generic/generic.c
 

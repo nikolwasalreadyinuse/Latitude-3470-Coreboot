@@ -10,6 +10,11 @@ config BOARD_SPECIFIC_OPTIONS
 	select OVERRIDE_FLASHMAP          # Crucial! Forces coreboot to use your custom .fmd layout
 	select MAINBOARD_HAS_LIBGFXINIT
 	select SOC_INTEL_COMMON_BLOCK_HDA_VERB
+	select AZALIA_USE_LEGACY_VERB_TABLE
+	select EC_ACPI
+	select EC_DELL_MEC5035
+	select HAVE_ACPI_RESUME
+	select HAVE_ACPI_TABLES
 	select DRIVERS_I2C_GENERIC
 
 config MAINBOARD_DIR
