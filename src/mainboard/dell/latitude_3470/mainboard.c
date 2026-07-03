@@ -27,7 +27,6 @@ static void mainboard_enable(struct device *dev)
 
 	
 	mec5035_early_init();
-	mec5035_init();
 }
 
 struct chip_operations mainboard_ops = {
