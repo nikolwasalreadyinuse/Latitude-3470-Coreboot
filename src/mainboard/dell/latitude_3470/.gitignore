@@ -5,3 +5,6 @@
 
 #old versions of configs
 *.old
+
+#junk folder:
+junk/

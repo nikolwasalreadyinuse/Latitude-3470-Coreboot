@@ -11,7 +11,5 @@ DefinitionBlock(
 	0x20110725
 )
 {
-	/* Intentionally left blank. 
-	   Coreboot handles devicetree devices natively via separate SSDT generation. */
-	   
+
 }

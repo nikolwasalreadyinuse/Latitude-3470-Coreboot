@@ -10,6 +10,8 @@ ec_blob-flags := -r ECFW
 #bootblock-y += hda_verb.c
 #romstage-y += early_init.c
 
+#bootblock-y += bootblock.c
+
 
 # Tell the build system to write the raw EC blob to the ECFW region right after the primary ROM layout is generated
 PHONY += update_ecfw_region
