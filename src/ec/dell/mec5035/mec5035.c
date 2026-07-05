@@ -103,14 +103,17 @@ static void mec5035_power_button_route(enum ec_power_button_route target)
 
 void mec5035_early_init(void)
 {
+  
 	/* If this isn't sent the EC shuts down the system after about 15
 	   seconds, flashing a pattern on the keyboard LEDs corresponding
 	   to "processor failure" according to Dell service manuals. */
+	printk(BIOS_INFO, "Ran mec5035 early init.\n");
 	ec_command(CMD_CPU_OK);
 }
 
 static void mec5035_init(struct device *dev)
 {
+        printk(BIOS_INFO, "Ran mec5035 later init.\n");
 	/* Unconditionally use this argument for now as this setting
 	   is probably the most sensible default out of the 3 choices. */
 	mec5035_mouse_touchpad(TP_PS2_MOUSE);
