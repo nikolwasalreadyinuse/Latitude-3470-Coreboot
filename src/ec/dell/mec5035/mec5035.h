@@ -38,7 +38,7 @@ enum ec_radio_state {
 	RADIO_ON
 };
 
-<<<<<<< HEAD
+
 enum ec_power_button_route {
 	EC = 0,
 	HOST
@@ -50,7 +50,7 @@ enum ec_mute {
 	UNMUTE,
 };
 
-=======
+
 #define ACPI_WAKEUP_NUM_ARGS 4
 enum ec_wake_change {
 	WAKE_OFF = 0,
@@ -66,7 +66,7 @@ enum ec_acpi_wake_events {
 
 #define SLEEP_EN_NUM_ARGS 2
 
->>>>>>> 8e176fd3b7 (ec/dell/mec5035: Add S3 suspend SMI handler)
+
 u8 mec5035_mouse_touchpad(enum ec_mouse_setting setting);
 void mec5035_cpu_ok(void);
 void mec5035_early_init(void);

@@ -108,6 +108,8 @@ static void mec5035_mute_ctrl(enum ec_mute mute)
 	write_mailbox_regs(buf, 2, MUTE_CTRL_NUM_ARGS);
 	ec_command(CMD_MUTE_CTRL);
 
+}
+
 void mec5035_change_wake(u8 source, enum ec_wake_change change)
 {
 	u8 buf[ACPI_WAKEUP_NUM_ARGS] = {change, source, 0, 0x40};
